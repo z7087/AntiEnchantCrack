@@ -1,0 +1,6 @@
+name: AntiEnchantCrack
+version: 1.0.0
+main: com.github.z7087.AntiEnchantCrack.Main
+description: "harder enchant crack"
+author: z7087
+api-version: 1.13

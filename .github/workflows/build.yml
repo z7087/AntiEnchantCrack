@@ -1,0 +1,27 @@
+#from FDPclient :D
+name: build
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Java setup
+        uses: actions/setup-java@v2
+        with:
+          distribution: "zulu"
+          java-version: 8
+          cache: "gradle"
+      - name: Set outputs
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      - name: Build
+        run: chmod +x ./gradlew && ./gradlew clean && ./gradlew build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: AntiEnchantCrack
+          path: build/libs/*.jar
