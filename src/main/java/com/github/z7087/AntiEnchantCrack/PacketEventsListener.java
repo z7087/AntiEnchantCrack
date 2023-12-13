@@ -68,7 +68,7 @@ public class PacketEventsListener extends SimplePacketListenerAbstract {
                 if (id == 3) {
                     //windowProperty.setValue(69); // why dont work
                     event.setCancelled(true);
-                    PacketEvents.getAPI().getProtocolManager().sendPacketSilently(user.getChannel(), new WrapperPlayServerWindowProperty(windowId, id, windowId);
+                    PacketEvents.getAPI().getProtocolManager().sendPacketSilently(user.getChannel(), new WrapperPlayServerWindowProperty(windowId, id, windowId));
                 }
             }
         } else if (event.getPacketType() == PacketType.Play.Server.OPEN_WINDOW) {
