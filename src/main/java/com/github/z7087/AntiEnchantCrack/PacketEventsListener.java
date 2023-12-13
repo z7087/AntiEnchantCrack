@@ -13,6 +13,7 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerWi
 import org.bukkit.ChatColor;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.Random;
 
 /*
 玩家右击附魔台方块时，服务器（1.14+）会发送一个open_window数据包 containerId为12
@@ -28,6 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PacketEventsListener extends SimplePacketListenerAbstract {
     // maybe memory leak but idc
     public final ConcurrentHashMap<User, Integer> playerEnchantingMap = new ConcurrentHashMap<>();
+    public final Random rand = new Random(0);
 
     public PacketEventsListener() {
         super(PacketListenerPriority.NORMAL);
@@ -68,6 +70,7 @@ public class PacketEventsListener extends SimplePacketListenerAbstract {
                 if (id == 3) {
                     //windowProperty.setValue(69); // why dont work
                     event.setCancelled(true);
+                    PacketEvents.getAPI().getProtocolManager().sendPacketSilently(user.getChannel(), new WrapperPlayServerWindowProperty(windowId, id, rand.nextInt(65536) - 32768));
                 }
             }
         } else if (event.getPacketType() == PacketType.Play.Server.OPEN_WINDOW) {
