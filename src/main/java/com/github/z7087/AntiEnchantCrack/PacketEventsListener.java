@@ -45,6 +45,9 @@ public class PacketEventsListener extends SimplePacketListenerAbstract {
 
     // 这个插件可能可以防御附魔破解，但无法防御使用掉落物的随机种子破解，请使用Paper及其下游服务端
 
+    // 这个现在只能简单的取消数据包，因为grim在HIGHEST优先级删除了所有对wrapper的更改
+    // 如果要把seed栏改成别的的话就把上面的优先级改成MONITOR，然后设置value
+
     // This is just a test, can be bypassed or just ignore the seed value in packet and use more time to crack it
     @Override
     public void onPacketPlaySend(PacketPlaySendEvent event) {
@@ -56,9 +59,8 @@ public class PacketEventsListener extends SimplePacketListenerAbstract {
             WrapperPlayServerWindowProperty windowProperty = new WrapperPlayServerWindowProperty(event);
 
             int windowId = (int)windowProperty.getWindowId();
-            int enchantingWindowId = playerEnchantingMap.getOrDefault(user, 0);
 
-            if (windowId != 0 && windowId == enchantingWindowId) {
+            if (windowId != 0 && windowId == playerEnchantingMap.getOrDefault(user, 0)) {
                 int id = windowProperty.getId();
 
                 //user.sendMessage(ChatColor.GOLD + "WindowProperty:  windowId="+windowId+" id="+id+" value="+windowProperty.getValue());
@@ -73,11 +75,17 @@ public class PacketEventsListener extends SimplePacketListenerAbstract {
 
             //user.sendMessage(ChatColor.GOLD + "OpenWindow:  windowId="+openWindow.getContainerId()+" type="+openWindow.getType()+" title="+openWindow.getTitle());
 
-            if (openWindow.getContainerId() != 0 && openWindow.getType() == 12) {
-                playerEnchantingMap.put(user, openWindow.getContainerId());
+            int windowId = openWindow.getContainerId();
+            if (windowId != 0) {
+                if (openWindow.getType() == 12) {
+                    playerEnchantingMap.put(user, openWindow.getContainerId());
+                }
+                else if (windowId == playerEnchantingMap.getOrDefault(user, 0)) {
+                    playerEnchantingMap.put(user, 0);
+                }
             }
-
         }
+
     }
 
 }
