@@ -58,6 +58,10 @@ tasks.build {
     dependsOn(tasks.shadowJar)
 }
 
+tasks.withType(JavaCompile) {  
+    options.encoding = "UTF-8"  
+}
+
 tasks.shadowJar {
     minimize()
     archiveFileName.set("${project.name}.jar")
