@@ -67,6 +67,6 @@ tasks.shadowJar {
     archiveFileName.set("${project.name}.jar")
     relocate("io.github.retrooper.packetevents", "com.github.z7087.AntiEnchantCrack.shaded.io.github.retrooper.packetevents")
     relocate("com.github.retrooper.packetevents", "com.github.z7087.AntiEnchantCrack.shaded.com.github.retrooper.packetevents")
-    relocate("com.google", "com.github.z7087.AntiEnchantCrack.shaded.com.google")
+    relocate("com.google.gson", "com.github.z7087.AntiEnchantCrack.shaded.com.google.gson")
     relocate("net.kyori", "com.github.z7087.AntiEnchantCrack.shaded.net.kyori")
 }
