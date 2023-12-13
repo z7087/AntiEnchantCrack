@@ -12,8 +12,8 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerOp
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerWindowProperty;
 import org.bukkit.ChatColor;
 
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 /*
 玩家右击附魔台方块时，服务器（1.14+）会发送一个open_window数据包 containerId为12
