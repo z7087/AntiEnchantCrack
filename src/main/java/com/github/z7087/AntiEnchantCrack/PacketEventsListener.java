@@ -12,16 +12,15 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerOp
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerWindowProperty;
 import org.bukkit.ChatColor;
 
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 /*
-Íæ¼ÒÓÒ»÷¸½Ä§Ì¨·½¿éÊ±£¬·şÎñÆ÷£¨1.14+£©»á·¢ËÍÒ»¸öopen_windowÊı¾İ°ü containerIdÎª12
-È»ºó·şÎñÆ÷»á·¢ËÍwindow_propertyÊı¾İ°ü ÆäÖĞidÎª3µÄÊı¾İ°ü°üº¬´ËÍæ¼ÒµÄ¸½Ä§seedÊı¾İµÄÆ¬¶Î£¨intÊıÖµ£¬Ê¹ÓÃshort½Ø¶Ï£©
-ÀıÈç ¸½Ä§seedÎª468479399 ÆäÆ¬¶ÎÎª28071 ¶ş½øÖÆ£¨´ó¶ËÔÚÇ°£©·Ö±ğÎª
+ç©å®¶å³å‡»é™„é­”å°æ–¹å—æ—¶ï¼ŒæœåŠ¡å™¨ï¼ˆ1.14+ï¼‰ä¼šå‘é€ä¸€ä¸ªopen_windowæ•°æ®åŒ… containerIdä¸º12
+ç„¶åæœåŠ¡å™¨ä¼šå‘é€window_propertyæ•°æ®åŒ… å…¶ä¸­idä¸º3çš„æ•°æ®åŒ…åŒ…å«æ­¤ç©å®¶çš„é™„é­”seedæ•°æ®çš„ç‰‡æ®µï¼ˆintæ•°å€¼ï¼Œä½¿ç”¨shortæˆªæ–­ï¼‰
+ä¾‹å¦‚ é™„é­”seedä¸º468479399 å…¶ç‰‡æ®µä¸º28071 äºŒè¿›åˆ¶ï¼ˆå¤§ç«¯åœ¨å‰ï¼‰åˆ†åˆ«ä¸º
 00011011 11101100 01101101 10100111
                                01101101 10100111
-¸½Ä§seedÎª881389686 ÆäÆ¬¶ÎÎª-3978 ¶ş½øÖÆ£¨´ó¶ËÔÚÇ°£©·Ö±ğÎª
+é™„é­”seedä¸º881389686 å…¶ç‰‡æ®µä¸º-3978 äºŒè¿›åˆ¶ï¼ˆå¤§ç«¯åœ¨å‰ï¼‰åˆ†åˆ«ä¸º
 00110100 10001000 11110000 01110110
                                11110000 01110110
 */
@@ -29,7 +28,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PacketEventsListener extends SimplePacketListenerAbstract {
     // maybe memory leak but idc
     public final ConcurrentHashMap<User, Integer> playerEnchantingMap = new ConcurrentHashMap<>();
-    public final Random rand = new Random(0);
 
     public PacketEventsListener() {
         super(PacketListenerPriority.NORMAL);
@@ -41,14 +39,14 @@ public class PacketEventsListener extends SimplePacketListenerAbstract {
         playerEnchantingMap.remove(user);
     }
 
-    // ¼ì²éWindow_Property°ü windowid¶ÔÓ¦µÄwindowÊÇ·ñÎª¸½Ä§Ì¨ ÇÒidÊÇ·ñÎªseed£¨ÔÚ1.19ÊÇ3£©
-    // È»ºóÌæ»»valueÎªrandom»ò¹Ì¶¨Öµ
-    // Ä¿Ç°²»ÖªµÀ¸÷¸ö°æ±¾µÄ¸½Ä§Ì¨idÊÇ·ñÒ»Ñù £¨ÔÚ1.19ÊÇ12£©
+    // æ£€æŸ¥Window_PropertyåŒ… windowidå¯¹åº”çš„windowæ˜¯å¦ä¸ºé™„é­”å° ä¸”idæ˜¯å¦ä¸ºseedï¼ˆåœ¨1.19æ˜¯3ï¼‰
+    // ç„¶åæ›¿æ¢valueä¸ºrandomæˆ–å›ºå®šå€¼
+    // ç›®å‰ä¸çŸ¥é“å„ä¸ªç‰ˆæœ¬çš„é™„é­”å°idæ˜¯å¦ä¸€æ · ï¼ˆåœ¨1.19æ˜¯12ï¼‰
 
-    // Õâ¸ö²å¼ş¿ÉÄÜ¿ÉÒÔ·ÀÓù¸½Ä§ÆÆ½â£¬µ«ÎŞ·¨·ÀÓùÊ¹ÓÃµôÂäÎïµÄËæ»úÖÖ×ÓÆÆ½â£¬ÇëÊ¹ÓÃPaper¼°ÆäÏÂÓÎ·şÎñ¶Ë
+    // è¿™ä¸ªæ’ä»¶å¯èƒ½å¯ä»¥é˜²å¾¡é™„é­”ç ´è§£ï¼Œä½†æ— æ³•é˜²å¾¡ä½¿ç”¨æ‰è½ç‰©çš„éšæœºç§å­ç ´è§£ï¼Œè¯·ä½¿ç”¨PaperåŠå…¶ä¸‹æ¸¸æœåŠ¡ç«¯
 
-    // Õâ¸öÏÖÔÚÖ»ÄÜ¼òµ¥µÄÈ¡ÏûÊı¾İ°ü£¬ÒòÎªgrimÔÚHIGHESTÓÅÏÈ¼¶É¾³ıÁËËùÓĞ¶ÔwrapperµÄ¸ü¸Ä
-    // Èç¹ûÒª°ÑseedÀ¸¸Ä³É±ğµÄµÄ»°¾Í°ÑÉÏÃæµÄÓÅÏÈ¼¶¸Ä³ÉMONITOR£¬È»ºóÉèÖÃvalue
+    // è¿™ä¸ªç°åœ¨åªèƒ½ç®€å•çš„å–æ¶ˆæ•°æ®åŒ…ï¼Œå› ä¸ºgrimåœ¨HIGHESTä¼˜å…ˆçº§åˆ é™¤äº†æ‰€æœ‰å¯¹wrapperçš„æ›´æ”¹
+    // å¦‚æœè¦æŠŠseedæ æ”¹æˆåˆ«çš„çš„è¯å°±æŠŠä¸Šé¢çš„ä¼˜å…ˆçº§æ”¹æˆMONITORï¼Œç„¶åè®¾ç½®value
 
     // This is just a test, can be bypassed or just ignore the seed value in packet and use more time to crack it
     @Override
@@ -70,7 +68,7 @@ public class PacketEventsListener extends SimplePacketListenerAbstract {
                 if (id == 3) {
                     //windowProperty.setValue(69); // why dont work
                     event.setCancelled(true);
-                    PacketEvents.getAPI().getProtocolManager().sendPacketSilently(user.getChannel(), new WrapperPlayServerWindowProperty(windowId, id, rand.nextInt(65536) - 32768));
+                    PacketEvents.getAPI().getProtocolManager().sendPacketSilently(user.getChannel(), new WrapperPlayServerWindowProperty(windowId, id, windowId);
                 }
             }
         } else if (event.getPacketType() == PacketType.Play.Server.OPEN_WINDOW) {
